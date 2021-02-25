@@ -1,5 +1,9 @@
 package com.db.interpretor.controller;
 
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import java.util.Collections;
 import java.util.Map;
 
@@ -19,6 +23,7 @@ import com.db.interpretor.service.viewTextService;
 import com.db.interpretor.service.SearchTextService;
 
 
+
 @RestController
 @RequestMapping("/interpretor")
 public class InterpretorServicesController {
@@ -30,7 +35,20 @@ private viewTextService viewTextService;
 @Autowired
 private SearchTextService searchTextService;
 
-protected Environment runtimeEnv;
+@Value("${app.myCredentials}")
+public String appmyCredentials;
+
+@Value("${app.projectId}")
+public String appprojectId;
+
+@Value("${app.bucketName}")
+public String appbucketName;
+
+@Value("${app.objectName}")
+public String appobjectName;
+
+@Value("${app.filePath}")
+public String appfilePath;
 
 @GetMapping("/")
 public String index() {
@@ -39,12 +57,31 @@ public String index() {
 
 @PostMapping("/uploadFile")
 public String uploadFile(@RequestParam("file") MultipartFile file,RedirectAttributes redirectAttributes) {
-	System.out.println("file"+"-"+file);
- 	interpretorUploadFileService.uploadFile(file);
+	interpretorUploadFileService.uploadFile(file);
 	redirectAttributes.addFlashAttribute("message",
 			"You successfully uploaded " + file.getOriginalFilename() + "!");
 
 	return "redirect:/";
+}
+
+
+@PostMapping("/uploadFileCloud")
+public String uploadFile(@RequestParam("file") String file) {
+	interpretorUploadFileService.uploadObject(appmyCredentials,appprojectId,appbucketName,appobjectName,file);
+	return "redirect:/";
+}
+
+
+@SuppressWarnings("rawtypes")
+@GetMapping("/filelistall")
+public ArrayList listFiles() {
+    return interpretorUploadFileService.getFileListing();
+}
+
+@SuppressWarnings("rawtypes")
+@GetMapping("/filelistallcloud")
+public ArrayList listFilesCloud() {
+    return interpretorUploadFileService.getFileListingCloud(appmyCredentials,appprojectId,appbucketName,appobjectName);
 }
 
 @RequestMapping(value = "/extracttext", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -67,5 +104,6 @@ public Map searchTxt(@RequestParam(value="text", required=true) String searctStr
 		retText = searchTextService.searchText(searctStr,fileType);
 	    return Collections.singletonMap("response", retText);
 	}	
+
 }
 
