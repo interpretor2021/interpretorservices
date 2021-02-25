@@ -38,15 +38,15 @@ import com.google.cloud.speech.v1.SpeechSettings;
 public class viewTextServiceImpl implements viewTextService  {
 
 	    //@Value("${app.path}")
-	    public String extractText(String fileName)
+	    public String extractText(String appmyCredentials,String appprojectId,String appbucketName, String fileName)
 	    {
 	
-		    String myCredentials = "E:\\Study\\fleet-passkey-305804-5e9e544f6ca6.json";
+		    String myCredentials = appmyCredentials; //"E:\\Study\\fleet-passkey-305804-5e9e544f6ca6.json";
 		    // The ID of your GCP project
-	        String projectId = "fleet-passkey-305804";
+	        String projectId = appprojectId;//"fleet-passkey-305804";
  
 	       // The ID of your GCS bucket
-	        String bucketName = "filebucket-shirish";
+	        String bucketName = appbucketName;// "filebucket-shirish";
 	        String responseText =""; 
 		    String fileType = fileName.substring(fileName.lastIndexOf(".")+1);
 		    System.out.println("FileType extracted "+fileType);
@@ -190,7 +190,7 @@ public class viewTextServiceImpl implements viewTextService  {
 	            // first (most likely) one here.
 	            SpeechRecognitionAlternative alternative = result.getAlternativesList().get(0);
 	            System.out.printf("Text: %s%n", alternative.getTranscript());
-	            responseText = alternative.getTranscript();
+	            responseText = alternative.getTranscript() ;
 	          }
 	        }
 		    catch (FileNotFoundException e1) {
