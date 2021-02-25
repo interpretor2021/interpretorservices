@@ -58,12 +58,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>11.2.0</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>3.14</version>
@@ -73,6 +67,29 @@
 		    <artifactId>poi-ooxml</artifactId>
 		    <version>3.14</version>
 		</dependency>
+		<dependency>
+		    <groupId>com.google.cloud</groupId>
+		    <artifactId>google-cloud-storage</artifactId>
+		    <version>1.113.11</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.google.cloud</groupId>
+		    <artifactId>google-cloud-vision</artifactId>
+		    <version>1.101.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.auth/google-auth-library-oauth2-http -->
+		<dependency>
+		    <groupId>com.google.auth</groupId>
+		    <artifactId>google-auth-library-oauth2-http</artifactId>
+		    <version>0.24.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.cloud/google-cloud-speech -->
+		<dependency>
+		    <groupId>com.google.cloud</groupId>
+		    <artifactId>google-cloud-speech</artifactId>
+		    <version>1.25.0</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
@@ -83,41 +100,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	
-		<repositories>
-		<repository>
-		  <snapshots>
-		  </snapshots>
-		  <id>central</id>
-		  <name>mvn-libs-release</name>
-		  <url>https://artifactory.intranet.db.com/artifactory/mvn-libs-release</url>
-		 </repository>
-	 	 <repository>
-		  <snapshots>
-				<enabled>true</enabled>
-		  </snapshots>
-		  <id>snapshots</id>
-		  <name>mvn-libs-snapshot</name>
-		  <url>https://artifactory.intranet.db.com/artifactory/mvn-libs-snapshot</url>
-	 </repository>
-		
-	</repositories>
-	
-	
-	
-	
-	
-   <distributionManagement>
-		<repository>
-			<id>central</id>
-			<name>DB Artifactory-releases</name>
-			<url>https://artifactory.intranet.db.com/artifactory/mvn-public-local</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<name>DB Artifactory-snapshots</name>
-			<url>https://artifactory.intranet.db.com/artifactory/mvn-snapshot-local</url>
-		</snapshotRepository>
-	</distributionManagement>
-
 </project>
