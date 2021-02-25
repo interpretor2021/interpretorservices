@@ -10,6 +10,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ import com.db.interpretor.service.SearchTextService;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/interpretor")
 public class InterpretorServicesController {
 
@@ -90,19 +92,20 @@ public Map preViewTxt(@RequestParam(value="file", required=true) String fileName
 {
 	//System.out.println("file"+"-"+fileName+"Type-"+fileType);
     String retText;
-	retText = viewTextService.extractText(fileName);
+	retText = viewTextService.extractText(appmyCredentials,appprojectId,appbucketName,fileName);
     return Collections.singletonMap("response", retText);
 }	
 
 @RequestMapping(value = "/searchtext", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-public Map searchTxt(@RequestParam(value="text", required=true) String searctStr,
+public ArrayList searchTxt(@RequestParam(value="text", required=true) String searctStr,
 		@RequestParam(value="type", required=true) String fileType
 		)
 	{
 		//System.out.println("file"+"-"+fileName+"Type-"+fileType);
-	    String retText;
-		retText = searchTextService.searchText(searctStr,fileType);
-	    return Collections.singletonMap("response", retText);
+	    //String retText;
+		//retText = searchTextService.searchText(appmyCredentials,appprojectId,appbucketName,appobjectName,searctStr,fileType);
+		return searchTextService.searchText(appmyCredentials,appprojectId,appbucketName,appobjectName,searctStr,fileType);
+	    //return Collections.singletonMap("response", retText);
 	}	
 
 }
