@@ -46,7 +46,10 @@ public class InterpretorUploadFileServiceImpl implements InterpretorUploadFileSe
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-	        BlobId blobId = BlobId.of(bucketName, objectName);
+			Path p = Paths.get(filePath);
+			String file = p.getFileName().toString();
+			System.out.println("file"+file);
+	        BlobId blobId = BlobId.of(bucketName, file);
 	        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
 	        try {
 				storage.create(blobInfo, Files.readAllBytes(Paths.get(filePath.toString())));
@@ -107,6 +110,7 @@ public class InterpretorUploadFileServiceImpl implements InterpretorUploadFileSe
 			 for (Bucket currentBucket : storage.list().iterateAll()) {
 				   System.out.println(currentBucket);
 				   currentBucketlist = currentBucket;
+				   System.out.println(currentBucket.getAcl().toString());
 				  }
 			 
 			 ArrayList<FileDetails> filePaths=new ArrayList<FileDetails>(); 
@@ -115,11 +119,13 @@ public class InterpretorUploadFileServiceImpl implements InterpretorUploadFileSe
 			  System.out.println("My Blob:");
 			 for (Blob currentBlob : currentBucketlist.list().iterateAll()) {
 				//System.out.println("My Blob:"+currentBlob);
-				filedet.setFilefullpath(currentBlob.getBucket());
+				 String filepathbasic="https://storage.cloud.google.com/";
+				filedet.setFilefullpath(filepathbasic+currentBlob.getBucket()+"/"+currentBlob.getName());
 	        	filedet.setFilename(currentBlob.getName());
-	        	filedet.setFilepath(currentBlob.getBucket());
+	        	filedet.setFilepath(filepathbasic+currentBlob.getBucket()+"/"+currentBlob.getName());
 	        	filedet.setFilesize(String.valueOf(currentBlob.getSize()));
-	        	filedet.setFiletype(currentBlob.getContentType());
+	        	//filedet.setFiletype(currentBlob.getContentType());
+	        	filedet.setFiletype(currentBlob.getName().substring(currentBlob.getName().lastIndexOf(".") + 1));
 	        //	 System.out.println("My Blob Details:"+filedet.toString());
 	        	filePaths.add(new FileDetails(
 	        			filedet.getFilename(),
