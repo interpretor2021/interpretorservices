@@ -112,8 +112,8 @@ public class InterpretorUploadFileServiceImpl implements InterpretorUploadFileSe
 			 Bucket currentBucketlist = null;
 			 for (Bucket currentBucket : storage.list().iterateAll()) {
 				   System.out.println(currentBucket);
-				   
-				   if (currentBucketlist.equals(bucketName))
+				   System.out.println(bucketName);
+				   if (currentBucket.getName().toString().equals(bucketName))
 				   {
 					   currentBucketlist = currentBucket;
 				   }

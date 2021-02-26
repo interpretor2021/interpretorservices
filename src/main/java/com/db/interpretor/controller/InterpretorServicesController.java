@@ -26,7 +26,8 @@ import com.db.interpretor.service.SearchTextService;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "https://hack-interpreters.el.r.appspot.com", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/interpretor")
 public class InterpretorServicesController {
 

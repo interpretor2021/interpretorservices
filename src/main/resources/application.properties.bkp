@@ -2,9 +2,8 @@ logging.level.org.springframework=DEBUG
 server.port=7015
 db.cors.host=localhost
 app.path=C:\\Hackethon\\Files
-app.projectId=fleet-passkey-305804
-app.bucketName=filebucket-shirish
+app.projectId=hack-interpreters
+app.bucketName=int-hack-bucket
 app.objectName=Shirish-8.txt
 app.filePath=C:\\Hackethon\\Files
-app.myCredentials=C:\\Users\\rashmi\\Downloads\\fleet-passkey-305804-5e9e544f6ca6.json
-	
+app.myCredentials=C:\\Users\\rashmi\\Downloads\\hack-interpreters-a6393dab7658.json
