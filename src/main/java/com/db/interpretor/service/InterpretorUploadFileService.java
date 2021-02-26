@@ -12,7 +12,7 @@ import com.db.interpretor.entity.FileDetails;
 
 public interface InterpretorUploadFileService {
 	 public void uploadFile(MultipartFile file);
-	 public void uploadObject(String myCredentials,String projectId, String bucketName, String objectName, String filePath);
+	 public void uploadObject(String myCredentials,String projectId, String bucketName, String objectName, MultipartFile filePath);
 	 public  ArrayList<FileDetails> getFileListing();
 	 public  ArrayList<FileDetails> getFileListingCloud(String myCredentials,String projectId, String bucketName, String objectName);
 	  

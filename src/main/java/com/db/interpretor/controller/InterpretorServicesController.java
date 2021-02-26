@@ -40,6 +40,10 @@ private SearchTextService searchTextService;
 @Value("${app.myCredentials}")
 public String appmyCredentials;
 
+@Value("${db.cors.host}")
+public String dbcorshost;
+
+
 @Value("${app.projectId}")
 public String appprojectId;
 
@@ -68,7 +72,7 @@ public String uploadFile(@RequestParam("file") MultipartFile file,RedirectAttrib
 
 
 @PostMapping("/uploadFileCloud")
-public String uploadFile(@RequestParam("file") String file) {
+public String uploadFile(@RequestParam("file") MultipartFile file) {
 	interpretorUploadFileService.uploadObject(appmyCredentials,appprojectId,appbucketName,appobjectName,file);
 	return "redirect:/";
 }

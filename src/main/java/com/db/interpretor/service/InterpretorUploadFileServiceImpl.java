@@ -33,9 +33,9 @@ public class InterpretorUploadFileServiceImpl implements InterpretorUploadFileSe
 	    @Value("${app.path}")
 	    public String uploadDir;
 	  
-	      public void uploadObject(String myCredentials,String projectId, String bucketName, String objectName, String filePath) {
-	      
-	        Storage storage = null;
+	      public void uploadObject(String myCredentials,String projectId, String bucketName, String objectName, MultipartFile filePath) {
+	    	 System.out.println("In CLoud: filePath"+filePath);
+	    	Storage storage = null;
 			try {
 				storage = StorageOptions.newBuilder().setProjectId(projectId).setCredentials(ServiceAccountCredentials.fromStream(
 				        new FileInputStream(myCredentials))).build().getService();
@@ -46,23 +46,26 @@ public class InterpretorUploadFileServiceImpl implements InterpretorUploadFileSe
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			Path p = Paths.get(filePath);
+			Path p = Paths.get(filePath.getOriginalFilename());
+			//Path p = Paths.get(filePath);
 			String file = p.getFileName().toString();
 			System.out.println("file"+file);
 	        BlobId blobId = BlobId.of(bucketName, file);
 	        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
 	        try {
-				storage.create(blobInfo, Files.readAllBytes(Paths.get(filePath.toString())));
+				//storage.create(blobInfo, Files.readAllBytes(Paths.get(filePath.toString())));
+	        	storage.create(blobInfo, filePath.getBytes());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 	      }
-	  
-	    
+	      
+	        
 	     
 	 public void uploadFile(MultipartFile file)  {
+		// System.out.println("In Normal Upload: filePath"+file.getOriginalFilename());
 		 		 Path copyLocation = Paths
 	                .get(uploadDir + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
 	            try {
@@ -109,7 +112,12 @@ public class InterpretorUploadFileServiceImpl implements InterpretorUploadFileSe
 			 Bucket currentBucketlist = null;
 			 for (Bucket currentBucket : storage.list().iterateAll()) {
 				   System.out.println(currentBucket);
-				   currentBucketlist = currentBucket;
+				   
+				   if (currentBucketlist.equals(bucketName))
+				   {
+					   currentBucketlist = currentBucket;
+				   }
+							
 				   System.out.println(currentBucket.getAcl().toString());
 				  }
 			 
